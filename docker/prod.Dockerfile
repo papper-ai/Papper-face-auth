@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.11.9-slim
 LABEL authors="pomelk1n"
 
 RUN addgroup --gid 10001 papperuser && \
