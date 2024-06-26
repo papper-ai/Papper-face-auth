@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: papper-ocr-service
+    build:
+      context: .
+      dockerfile: docker/dev.Dockerfile
+    ports:
+      - "${SERVICE_PORT}:8000"
+    volumes:
+      - ./${WEIGHTS_FOLDER}:/usr/data/app/${WEIGHTS_FOLDER}
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '0' ]
+              capabilities: [ gpu ]

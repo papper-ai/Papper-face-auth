@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: papper-ocr-service
+    build:
+      context: .
+      dockerfile: docker/prod.Dockerfile
+    ports:
+      - "${SERVICE_PORT}:8000"
+    volumes:
+      - ./${WEIGHTS_FOLDER}:/usr/data/app/${WEIGHTS_FOLDER}
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/health" ]
+      interval: 10m
+      timeout: 30s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '0' ]
+              capabilities: [ gpu ]
