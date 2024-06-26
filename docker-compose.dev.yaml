@@ -9,7 +9,7 @@ services:
     ports:
       - "${SERVICE_PORT}:8000"
     volumes:
-      - ./${WEIGHTS_FOLDER}:/usr/data/app/${WEIGHTS_FOLDER}
+      - ./weights:/usr/data/app/weights
       - ./.:/usr/data/app
     restart: unless-stopped
     command: >
@@ -19,5 +19,5 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              device_ids: [ '0' ]
+              device_ids: [ '1' ]
               capabilities: [ gpu ]
